@@ -1,5 +1,6 @@
 {
   "name": "macinfo",
+  "productName" : "macinfo",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -9,12 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^20.1.4",
     "menubar": "^9.2.2",
     "osx-temperature-sensor": "^1.0.8",
     "systeminformation": "^5.12.6"
   },
   "devDependencies": {
+    "electron": "^20.1.4",
+    "electron-packager": "^16.0.0",
     "electron-rebuild": "^3.2.9"
   }
 }

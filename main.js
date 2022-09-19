@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, ipcMain } = require('electron')
 const { sendInfo } = require('./sendinfo')
 const { menubar } = require('menubar');
 const path = require('path')
