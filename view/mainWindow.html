@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacInfo</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+</head>
+<body>
+    <h1>CPU Temp: <span id="cpu-temp"></span></h1>
+    <h1>CPU Load: <span id="cpu-load"></span></h1>
+    <h1>Memory Usage: <span id="memory"></span></h1>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/fontawesome.min.js"></script>
+    <script>
+        $(window).on("load",()=>{
+            const { ipcRenderer } = require('electron')
+            ipcRenderer.on("cpuTemp",(err,data)=>{
+                $('#cpu-temp').text(data)
+            })
+
+            ipcRenderer.on("cpuLoad",(err,data)=>{
+                $('#cpu-load').text(data)
+            })
+
+            ipcRenderer.on("memory",(err,data)=>{
+                $('#memory').text(data)
+            })
+        })
+    </script>
+    <script>if (window.module) module = window.module;</script>
+</body>
+</html>
