@@ -64,9 +64,8 @@
                 </svg>
                 <div class="number">
                     <h2><span id="wifi-text"></span><small>%</small> </h2>
-                    <p>WiFi Signal</p>
-                    <br>
-                    <small id="ssid" class="text-muted"></small>
+                    <p id="ssid" max-length="13">WiFi Signal</p>
+                    
                 </div>
             </div>
         </div>
@@ -97,9 +96,11 @@
             })
 
             ipcRenderer.on("wifi",(err,data)=>{
-                $("#wifi-percent").css("--num", data.signalLevel)
-                $("#wifi-percent").text(data.signalLevel)
-                $("#ssid").text(data.ssid)
+                let signalLevel = data.signalLevel
+                let ssid = data.ssid
+                $("#wifi-percent").css("--num", signalLevel)
+                $("#wifi-text").text(signalLevel)
+                $("#ssid").text(ssid.substring(0, 13))
             })
 
         })

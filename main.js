@@ -1,28 +1,30 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const si = require('systeminformation')
 const { sendInfo } = require('./sendinfo')
+const { menubar } = require('menubar');
+const path = require('path')
 
-app.whenReady().then(()=>{
-    let mainWindow = new BrowserWindow({
+
+const mb = menubar({
+    dir:  app.getAppPath(),
+    index: 'file://' + app.getAppPath() + '/view/mainWindow.html',
+    showDockIcon : false,
+    browserWindow: {
         width : 300,
-        height : 330,
-        title : "MacInfo",
-        resizable: false,
-        fullscreen: false,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false, 
-            enableRemoteModule: true
-          }
+            height : 330,
+            title : "MacInfo",
+            resizable: false,
+            fullscreen: false,
+            webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false, 
+                enableRemoteModule: true
+              }
+    }
+});
+
+mb.on('ready', () => {
+    mb.on('after-create-window', ()=>{
+        app.dock.hide();
+        sendInfo(mb.window)
     })
-
-
-    si.wifiConnections().then(data => console.log(data[0]))
-
-    mainWindow.webContents.once('dom-ready',()=>{
-        sendInfo(mainWindow)
-    })    
-
-    mainWindow.loadFile("./view/mainWindow.html")
-
-})
+});

@@ -4,7 +4,7 @@ exports.sendInfo = (window)=>{
     setInterval(()=>{
        si.cpuTemperature().then((data)=>{
         window.webContents.send("cpuTemp",data.main)
-       }) 
+       }).catch(err => console.log(err))
     },3000)
 
     setInterval(()=>{

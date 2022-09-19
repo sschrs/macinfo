@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "electron": "^20.1.4",
+    "menubar": "^9.2.2",
     "osx-temperature-sensor": "^1.0.8",
     "systeminformation": "^5.12.6"
   },
