@@ -1,0 +1,112 @@
+.meter{
+    position: relative; 
+    width: 150px;
+    height: 150px;
+    background-color: #082032;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.meter .percent{
+    position: relative;
+    width: 112.5px;
+    height: 112.5px;
+}
+
+.meter .percent svg{
+    position: relative;
+    width: 112.5px;
+    height: 112.5px;
+    transform: rotate(270deg);
+}
+
+.meter .percent svg circle{
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+    stroke-width: 3;
+    stroke: black;
+    transform: translate(3.75px, 3.75px);
+}
+
+.meter .percent svg circle:nth-child(2){
+    stroke: var(--clr);
+    stroke-dasharray: 330;
+    stroke-dashoffset: calc(330 - (330 * var(--num)) / 100);
+    opacity: 0;
+    animation: fadeIn 1s linear forwards;
+    animation-delay: 2s;
+}
+
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+    }
+
+    100%{
+        opacity: 1;
+    }
+}
+
+.dot{
+    position: absolute;
+    inset: 3.75px;
+    z-index: 10;
+    
+    animation: animateDot 2s linear forwards;
+}
+
+@keyframes animateDot{
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(calc(3.6deg * var(--num)));
+    }
+}
+
+.dot::before{
+    content: '';
+    position: absolute;
+    top: -3.75px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 7px;
+    height: 7px;
+    background: var(--clr);
+    border-radius: 50%;
+    box-shadow: 0 0 7px var(--clr), 0 0 20px var(--clr);
+}
+
+.number{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn 1s linear forwards;
+    animation-delay: 2s;
+}
+
+.number h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 1.2em;
+}
+
+
+
+.number p{
+    color: #fff;
+    font-size: .7em;
+    line-height: 2;
+    margin-top: 0;
+}

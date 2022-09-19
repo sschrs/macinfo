@@ -20,4 +20,10 @@ exports.sendInfo = (window)=>{
         })
     },1000)
 
+    setInterval(()=>{
+        si.wifiConnections().then((data)=>{
+            window.webContents.send("wifi",data[0])
+        })
+    },3000)
+
 }

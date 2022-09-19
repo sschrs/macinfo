@@ -4,9 +4,11 @@ const { sendInfo } = require('./sendinfo')
 
 app.whenReady().then(()=>{
     let mainWindow = new BrowserWindow({
-        width : 250,
-        height : 300,
+        width : 300,
+        height : 330,
         title : "MacInfo",
+        resizable: false,
+        fullscreen: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false, 
@@ -14,6 +16,8 @@ app.whenReady().then(()=>{
           }
     })
 
+
+    si.wifiConnections().then(data => console.log(data[0]))
 
     mainWindow.webContents.once('dom-ready',()=>{
         sendInfo(mainWindow)

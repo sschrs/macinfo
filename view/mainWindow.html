@@ -7,29 +7,101 @@
     <title>MacInfo</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/progress.css">
 </head>
-<body>
-    <h1>CPU Temp: <span id="cpu-temp"></span></h1>
-    <h1>CPU Load: <span id="cpu-load"></span></h1>
-    <h1>Memory Usage: <span id="memory"></span></h1>
+<body>  
+    <div class="comp">
+        <div class="meter">
+            <div id="load-percent" class="percent" style="--clr:#31E1F7;--num:85">
+                <div class="dot"></div>
+                <svg>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                </svg>
+                <div class="number">
+                    <h2><span id="load-text"></span><small>%</small> </h2>
+                    <p>CPU Load</p>
+                </div>
+            </div>
+        </div>
+        <div class="meter">
+            <div id="temp-percent" class="percent" style="--clr:#FEDB39;--num:72">
+                <div class="dot"></div>
+                <svg>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                </svg>
+                <div class="number">
+                    <h2><span id="temp-text"></span><small>C°</small> </h2>
+                    <p>CPU Temp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comp">
+        <div class="meter">
+            <div id="memory-percent" class="percent" style="--clr:#F637EC;--num:60">
+                <div class="dot"></div>
+                <svg>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                </svg>
+                <div class="number">
+                    <h2><span id="memory-text"></span><small>%</small> </h2>
+                    <p>Memory Usage</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="meter">
+            <div id="wifi-percent" class="percent" style="--clr:#00FFAB;--num:34">
+                <div class="dot"></div>
+                <svg>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                    <circle cx="52.5" cy="52.5" r="52.5"></circle>
+                </svg>
+                <div class="number">
+                    <h2><span id="wifi-text"></span><small>%</small> </h2>
+                    <p>WiFi Signal</p>
+                    <br>
+                    <small id="ssid" class="text-muted"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/fontawesome.min.js"></script>
+    <script src="../assets/js/progress.js"></script>
     <script>
         $(window).on("load",()=>{
+
             const { ipcRenderer } = require('electron')
             ipcRenderer.on("cpuTemp",(err,data)=>{
-                $('#cpu-temp').text(data)
+                $("#temp-percent").css("--num",data)
+                $("#temp-text").text(data)
             })
 
             ipcRenderer.on("cpuLoad",(err,data)=>{
-                $('#cpu-load').text(data)
+                $("#load-percent").css("--num",data)
+                $("#load-text").text(data)
             })
 
             ipcRenderer.on("memory",(err,data)=>{
-                $('#memory').text(data)
+                $("#memory-percent").css("--num",data*100)
+                $("#memory-text").text(Math.round(data*100))
             })
+
+            ipcRenderer.on("wifi",(err,data)=>{
+                $("#wifi-percent").css("--num", data.signalLevel)
+                $("#wifi-percent").text(data.signalLevel)
+                $("#ssid").text(data.ssid)
+            })
+
         })
     </script>
     <script>if (window.module) module = window.module;</script>
